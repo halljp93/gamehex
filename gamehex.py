@@ -5,7 +5,7 @@ import pygame
 
 pygame.init()
 BLUE = 0, 0, 255
-size = 1500, 1388
+size = int(sys.argv[1]), int(sys.argv[2])
 screen = pygame.display.set_mode(size)
 
 #dimensions/key vertices of hex in its rect
@@ -14,7 +14,9 @@ TOP_RIGHT = [360, 123]
 TOP = [210, 36]
 HEX_WIDTH = 300
 EDGE_LEN = 175
-VERT_OFFSET = 260
+V_OFFSET = 260
+H_PAD = 60
+V_PAD = 36
 
 
 tiles = [
@@ -58,49 +60,47 @@ numbers = [
         "11",
         "12"
         ]
-shuffle(tiles)
 
+shuffle(tiles)
 shuffle(numbers)
 
-tile = 0
-number = 0
 board = [
             [
-                [HEX_WIDTH - 60, -36],
-                [HEX_WIDTH * 2 - 60, -36],
-                [HEX_WIDTH * 3 - 60, -36]
+                [HEX_WIDTH - H_PAD, -V_PAD],
+                [HEX_WIDTH * 2 - H_PAD, -V_PAD],
+                [HEX_WIDTH * 3 - H_PAD, -V_PAD]
             ],
 
             [
 
-                [HEX_WIDTH / 2 - 60, 224],
-                [HEX_WIDTH * 1.5  - 60, 224],
-                [HEX_WIDTH * 2.5 - 60, 224],
-                [HEX_WIDTH * 3.5 - 60, 224],
-            ],
-
-            [
-                
-                [-60, 484],
-                [HEX_WIDTH - 60, 484],
-                [HEX_WIDTH * 2 - 60, 484],
-                [HEX_WIDTH * 3 - 60, 484],
-                [HEX_WIDTH * 4 - 60, 484],
+                [HEX_WIDTH / 2 - H_PAD, V_OFFSET - V_PAD],
+                [HEX_WIDTH * 1.5  - H_PAD, V_OFFSET - V_PAD],
+                [HEX_WIDTH * 2.5 - H_PAD, V_OFFSET - V_PAD],
+                [HEX_WIDTH * 3.5 - H_PAD, V_OFFSET - V_PAD],
             ],
 
             [
                 
-                [HEX_WIDTH / 2 - 60, 744],
-                [HEX_WIDTH * 1.5 - 60, 744],
-                [HEX_WIDTH * 2.5 - 60, 744],
-                [HEX_WIDTH * 3.5 - 60, 744],
+                [-H_PAD, V_OFFSET * 2 - V_PAD],
+                [HEX_WIDTH - H_PAD, V_OFFSET * 2 - V_PAD],
+                [HEX_WIDTH * 2 - H_PAD, V_OFFSET * 2 - V_PAD],
+                [HEX_WIDTH * 3 - H_PAD, V_OFFSET * 2 - V_PAD],
+                [HEX_WIDTH * 4 - H_PAD, V_OFFSET * 2 - V_PAD],
             ],
 
             [
                 
-                [HEX_WIDTH - 60, 1004],
-                [HEX_WIDTH * 2 - 60, 1004],
-                [HEX_WIDTH * 3 - 60, 1004],
+                [HEX_WIDTH / 2 - H_PAD, V_OFFSET * 3 - V_PAD],
+                [HEX_WIDTH * 1.5 - H_PAD, V_OFFSET * 3 - V_PAD],
+                [HEX_WIDTH * 2.5 - H_PAD, V_OFFSET * 3 - V_PAD],
+                [HEX_WIDTH * 3.5 - H_PAD, V_OFFSET * 3 - V_PAD],
+            ],
+
+            [
+                
+                [HEX_WIDTH - H_PAD, V_OFFSET * 4 - V_PAD],
+                [HEX_WIDTH * 2 - H_PAD, V_OFFSET * 4 - V_PAD],
+                [HEX_WIDTH * 3 - H_PAD, V_OFFSET * 4 - V_PAD],
             ]
         ]
 
