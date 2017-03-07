@@ -4,8 +4,6 @@ import sys
 import pygame
 
 pygame.init()
-BLACK = 0, 0, 0
-WHITE = 255, 255, 255
 BLUE = 0, 0, 255
 size = 1366, 768
 screen = pygame.display.set_mode(size)
@@ -18,9 +16,6 @@ HEX_WIDTH = 300
 EDGE_LEN = 175
 VERT_OFFSET = 260
 
-hex = pygame.image.load("hex.png")
-hex = pygame.transform.rotate(hex,90)
-hex_rect = hex.get_rect()
 
 tiles = [
         "brick",
@@ -70,6 +65,7 @@ shuffle(numbers)
 tile = 0
 number = 0
 
+#maybe will simplify placement on screen, currently unused
 board = [
         #first row
         [HEX_WIDTH - 60, -36],
@@ -98,6 +94,8 @@ board = [
         ]
 
 screen.fill(BLUE)
+
+#draws first three rows of board accounting for dead space in png
 for i in range(1, 4):
     screen.blit(pygame.image.load("pieces/tiles/%s.png" % tiles[tile]), (HEX_WIDTH * i - 60, -36))
     tile += 1
@@ -108,7 +106,8 @@ for i in range(0, 6):
     screen.blit(pygame.image.load("pieces/tiles/%s.png" % tiles[tile]), ((HEX_WIDTH * i) - 60, 484))
     tile += 1
 
-screen.blit(pygame.image.load("pieces/numbers/%s.png" % numbers[number]), (50, 50))
+#testing number image
+#screen.blit(pygame.image.load("pieces/numbers/%s.png" % numbers[number]), (50, 50))
 
 
 
