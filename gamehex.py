@@ -59,61 +59,77 @@ numbers = [
         "12"
         ]
 shuffle(tiles)
+
 shuffle(numbers)
 
 tile = 0
 number = 0
-
-#maybe will simplify placement on screen, currently unused
 board = [
-        #first row
-        [HEX_WIDTH - 60, -36],
-        [HEX_WIDTH * 2 - 60, -36],
-        [HEX_WIDTH * 3 - 60, -36],
-        #second row
-        [HEX_WIDTH / 2 - 60, 224],
-        [HEX_WIDTH - 60, 224],
-        [HEX_WIDTH * 3 / 2 - 60, 224],
-        [HEX_WIDTH * 2 - 60, 224],
-        #third row
-        [HEX_WIDTH - 60, 484],
-        [HEX_WIDTH * 2 - 60, 484],
-        [HEX_WIDTH * 3 - 60, 484],
-        [HEX_WIDTH * 4 - 60, 484],
-        [HEX_WIDTH * 5 - 60, 484],
-        #fourth row
-        [HEX_WIDTH / 2 - 60, 744],
-        [HEX_WIDTH - 60, 224],
-        [HEX_WIDTH * 3 / 2 - 60, 744],
-        [HEX_WIDTH * 2 - 60, 744],
-        #fifth row
-        [HEX_WIDTH - 60, 1004],
-        [HEX_WIDTH * 2 - 60, 1004],
-        [HEX_WIDTH * 3 - 60, 1004],
+            [
+                [HEX_WIDTH - 60, -36],
+                [HEX_WIDTH * 2 - 60, -36],
+                [HEX_WIDTH * 3 - 60, -36]
+            ],
+
+            [
+
+                [HEX_WIDTH / 2 - 60, 224],
+                [HEX_WIDTH * 1.5  - 60, 224],
+                [HEX_WIDTH * 2.5 - 60, 224],
+                [HEX_WIDTH * 3.5 - 60, 224],
+            ],
+
+            [
+                
+                [-60, 484],
+                [HEX_WIDTH - 60, 484],
+                [HEX_WIDTH * 2 - 60, 484],
+                [HEX_WIDTH * 3 - 60, 484],
+                [HEX_WIDTH * 4 - 60, 484],
+            ],
+
+            [
+                
+                [HEX_WIDTH / 2 - 60, 744],
+                [HEX_WIDTH * 1.5 - 60, 744],
+                [HEX_WIDTH * 2.5 - 60, 744],
+                [HEX_WIDTH * 3.5 - 60, 744],
+            ],
+
+            [
+                
+                [HEX_WIDTH - 60, 1004],
+                [HEX_WIDTH * 2 - 60, 1004],
+                [HEX_WIDTH * 3 - 60, 1004],
+            ]
         ]
+
+def put_number(coords):
+    coords[0] += 185
+    coords[1] += 185
+    screen.blit(pygame.image.load("pieces/numbers/%s.png" % numbers.pop()), coords)
+
+def put_hex(coords):
+    type = tiles.pop()
+    screen.blit(pygame.image.load("pieces/tiles/%s.png" % type), coords)
+    if type != "desert":
+        put_number(coords)
+    else:
+        pass
 
 screen.fill(BLUE)
 
-#draws first three rows of board accounting for dead space in png
-for i in range(1, 4):
-    screen.blit(pygame.image.load("pieces/tiles/%s.png" % tiles[tile]), (HEX_WIDTH * i - 60, -36))
-    tile += 1
-for i in range(1, 5):
-    screen.blit(pygame.image.load("pieces/tiles/%s.png" % tiles[tile]), ((HEX_WIDTH * i) - (HEX_WIDTH / 2) - 60, 224))
-    tile += 1
-for i in range(0, 6):
-    screen.blit(pygame.image.load("pieces/tiles/%s.png" % tiles[tile]), ((HEX_WIDTH * i) - 60, 484))
-    tile += 1
+#draw tiles
+for row in board:
+    for position in row:
+        put_hex(position)
 
 #testing number image
 #screen.blit(pygame.image.load("pieces/numbers/%s.png" % numbers[number]), (50, 50))
 
-
-
 pygame.display.flip()
 
 while True:
-    pygame.time.wait(1000) # don't know if this would reduce CPU
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
