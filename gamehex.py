@@ -5,7 +5,7 @@ import pygame
 
 pygame.init()
 BLUE = 0, 0, 255
-size = 1366, 768
+size = 1500, 1388
 screen = pygame.display.set_mode(size)
 
 #dimensions/key vertices of hex in its rect
@@ -117,15 +117,13 @@ def put_hex(coords):
     else:
         pass
 
-screen.fill(BLUE)
+screen.blit(pygame.image.load("pieces/ocean.jpg"), (0,0))
 
 #draw tiles
 for row in board:
     for position in row:
         put_hex(position)
 
-#testing number image
-#screen.blit(pygame.image.load("pieces/numbers/%s.png" % numbers[number]), (50, 50))
 
 pygame.display.flip()
 
