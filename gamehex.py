@@ -4,8 +4,14 @@ import sys
 import pygame
 
 pygame.init()
-BLUE = 0, 0, 255
-size = int(sys.argv[1]), int(sys.argv[2])
+
+if len(sys.argv) == 2:
+    size = int(1500 / 1388 * int(sys.argv[1])), int(sys.argv[1])
+elif len(sys.argv) == 3:
+    size = int(sys.argv[1]), int(sys.argv[2])
+else:
+    size = 1500, 1388
+
 window = pygame.Surface((1500, 1388))
 screen = pygame.display.set_mode(size)
 
@@ -18,7 +24,7 @@ EDGE_LEN = 175
 V_OFFSET = 260
 H_PAD = 60
 V_PAD = 36
-
+#jhwe;l[p omwasm ][iuu jwre njy gayus
 
 tiles = [
         "brick",
