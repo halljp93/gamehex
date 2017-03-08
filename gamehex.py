@@ -6,6 +6,7 @@ import pygame
 pygame.init()
 BLUE = 0, 0, 255
 size = int(sys.argv[1]), int(sys.argv[2])
+window = pygame.Surface((1500, 1388))
 screen = pygame.display.set_mode(size)
 
 #dimensions/key vertices of hex in its rect
@@ -107,23 +108,44 @@ board = [
 def put_number(coords):
     coords[0] += 185
     coords[1] += 185
-    screen.blit(pygame.image.load("pieces/numbers/%s.png" % numbers.pop()), coords)
+    window.blit(pygame.image.load("pieces/numbers/%s.png" % numbers.pop()), coords)
 
 def put_hex(coords):
     type = tiles.pop()
-    screen.blit(pygame.image.load("pieces/tiles/%s.png" % type), coords)
+    window.blit(pygame.image.load("pieces/tiles/%s.png" % type), coords)
     if type != "desert":
         put_number(coords)
     else:
         pass
 
-screen.blit(pygame.image.load("pieces/ocean.jpg"), (0,0))
+window.blit(pygame.image.load("pieces/ocean.jpg"), (0,0))
 
 #draw tiles
 for row in board:
     for position in row:
         put_hex(position)
 
+def valid(row, tile):
+    if tile > 0:
+        if row > 0:
+            if [row-1][tile-1] == "6" or [row-1][tile-1] == "8":
+                return false
+            elif [row - 1] [tile] == "6" or [row - 1][tile] == "8":
+                return false
+            else:
+                pass
+        else:
+            pass
+    elif [row][tile -1] == "6" or [row][tile -1] == "8":
+        return false
+    else:
+            pass
+    return true
+
+newWindow = pygame.Surface(size)
+pygame.transform.scale(window, size, newWindow)
+
+screen.blit(newWindow, (0, 0))
 
 pygame.display.flip()
 
