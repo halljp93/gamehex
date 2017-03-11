@@ -1,4 +1,6 @@
-from time import sleep
+# this started out as clean code
+# I don't know what happened, I'm sorry
+
 from random import shuffle
 import sys
 import pygame
@@ -16,15 +18,15 @@ window = pygame.Surface((1500, 1388))
 screen = pygame.display.set_mode(size)
 
 #dimensions/key vertices of hex in its rect
-TOP_LEFT = [60, 123]
-TOP_RIGHT = [360, 123]
-TOP = [210, 36]
 HEX_WIDTH = 300
-EDGE_LEN = 175
 V_OFFSET = 260
 H_PAD = 60
 V_PAD = 36
+
+#Tom's line of code
 #jhwe;l[p omwasm ][iuu jwre njy gayus
+
+
 
 tiles = [
         "brick",
@@ -47,106 +49,143 @@ tiles = [
         "wheat",
         "desert"
         ]
+
+#in "alphabetical" order for spiral placement
 numbers = [
+        "11",
+        "3",
+        "6",
+        "5",
+        "4",
+        "9",
+        "10",
+        "8",
+        "4",
+        "11",
+        "12",
+        "9",
+        "10",
+        "8",
+        "3",
+        "6",
         "2",
-        "3",
-        "3",
-        "4",
-        "4",
-        "5",
-        "5",
-        "6",
-        "6",
-        "8",
-        "8",
-        "9",
-        "9",
-        "10",
-        "10",
-        "11",
-        "11",
-        "12"
+        "5"
         ]
 
 shuffle(tiles)
-shuffle(numbers)
 
 board = [
             [
-                [HEX_WIDTH - H_PAD, -V_PAD],
-                [HEX_WIDTH * 2 - H_PAD, -V_PAD],
-                [HEX_WIDTH * 3 - H_PAD, -V_PAD]
+                [HEX_WIDTH - H_PAD, -V_PAD, False, tiles.pop()          ],
+                [HEX_WIDTH * 2 - H_PAD, -V_PAD, False, tiles.pop()      ],
+                [HEX_WIDTH * 3 - H_PAD, -V_PAD, False, tiles.pop()      ]
             ],
 
             [
 
-                [HEX_WIDTH / 2 - H_PAD, V_OFFSET - V_PAD],
-                [HEX_WIDTH * 1.5  - H_PAD, V_OFFSET - V_PAD],
-                [HEX_WIDTH * 2.5 - H_PAD, V_OFFSET - V_PAD],
-                [HEX_WIDTH * 3.5 - H_PAD, V_OFFSET - V_PAD],
-            ],
-
-            [
-                
-                [-H_PAD, V_OFFSET * 2 - V_PAD],
-                [HEX_WIDTH - H_PAD, V_OFFSET * 2 - V_PAD],
-                [HEX_WIDTH * 2 - H_PAD, V_OFFSET * 2 - V_PAD],
-                [HEX_WIDTH * 3 - H_PAD, V_OFFSET * 2 - V_PAD],
-                [HEX_WIDTH * 4 - H_PAD, V_OFFSET * 2 - V_PAD],
+                [HEX_WIDTH / 2 - H_PAD, V_OFFSET - V_PAD, False, tiles.pop()],
+                [HEX_WIDTH * 1.5  - H_PAD, V_OFFSET - V_PAD, False, tiles.pop()],
+                [HEX_WIDTH * 2.5 - H_PAD, V_OFFSET - V_PAD, False, tiles.pop()],
+                [HEX_WIDTH * 3.5 - H_PAD, V_OFFSET - V_PAD, False, tiles.pop()]
             ],
 
             [
                 
-                [HEX_WIDTH / 2 - H_PAD, V_OFFSET * 3 - V_PAD],
-                [HEX_WIDTH * 1.5 - H_PAD, V_OFFSET * 3 - V_PAD],
-                [HEX_WIDTH * 2.5 - H_PAD, V_OFFSET * 3 - V_PAD],
-                [HEX_WIDTH * 3.5 - H_PAD, V_OFFSET * 3 - V_PAD],
+                [-H_PAD, V_OFFSET * 2 - V_PAD, False, tiles.pop()       ],
+                [HEX_WIDTH - H_PAD, V_OFFSET * 2 - V_PAD, False, tiles.pop()],
+                [HEX_WIDTH * 2 - H_PAD, V_OFFSET * 2 - V_PAD, False, tiles.pop()],
+                [HEX_WIDTH * 3 - H_PAD, V_OFFSET * 2 - V_PAD, False, tiles.pop()],
+                [HEX_WIDTH * 4 - H_PAD, V_OFFSET * 2 - V_PAD, False, tiles.pop()]
             ],
 
             [
                 
-                [HEX_WIDTH - H_PAD, V_OFFSET * 4 - V_PAD],
-                [HEX_WIDTH * 2 - H_PAD, V_OFFSET * 4 - V_PAD],
-                [HEX_WIDTH * 3 - H_PAD, V_OFFSET * 4 - V_PAD],
+                [HEX_WIDTH / 2 - H_PAD, V_OFFSET * 3 - V_PAD, False, tiles.pop()],
+                [HEX_WIDTH * 1.5 - H_PAD, V_OFFSET * 3 - V_PAD, False, tiles.pop()],
+                [HEX_WIDTH * 2.5 - H_PAD, V_OFFSET * 3 - V_PAD, False, tiles.pop()],
+                [HEX_WIDTH * 3.5 - H_PAD, V_OFFSET * 3 - V_PAD, False, tiles.pop()]
+            ],
+
+            [
+                
+                [HEX_WIDTH - H_PAD, V_OFFSET * 4 - V_PAD, False, tiles.pop()],
+                [HEX_WIDTH * 2 - H_PAD, V_OFFSET * 4 - V_PAD, False, tiles.pop()],
+                [HEX_WIDTH * 3 - H_PAD, V_OFFSET * 4 - V_PAD, False, tiles.pop()]
             ]
         ]
 
-def put_number(coords):
-    coords[0] += 185
-    coords[1] += 185
-    window.blit(pygame.image.load("pieces/numbers/%s.png" % numbers.pop()), coords)
+port_locations = [
+        {'path': "pieces/ports/port1.png", 'x': board[0][0][0], 'y': board[0][0][1]},
+        {'path': "pieces/ports/port2.png", 'x': board[0][1][0], 'y': board[0][1][1]},
+        {'path': "pieces/ports/port3.png", 'x': board[1][0][0], 'y': board[1][0][1]},
+        {'path': "pieces/ports/port4.png", 'x': board[1][3][0], 'y': board[1][3][1]},
+        {'path': "pieces/ports/port5.png", 'x': board[2][4][0], 'y': board[2][4][1]},
+        {'path': "pieces/ports/port6.png", 'x': board[3][0][0], 'y': board[3][0][1]},
+        {'path': "pieces/ports/port7.png", 'x': board[3][3][0], 'y': board[3][3][1]},
+        {'path': "pieces/ports/port8.png", 'x': board[4][0][0], 'y': board[4][0][1]},
+        {'path': "pieces/ports/port9.png", 'x': board[4][1][0], 'y': board[4][1][1]}
+        ]
 
-def put_hex(coords):
-    type = tiles.pop()
+def put_number(row, tile):
+    coords = (board[row][tile][0], board[row][tile][1])
+    if board[row][tile][3] != "desert":
+       window.blit(pygame.image.load("pieces/numbers/%s.png" % numbers.pop()), coords) 
+
+def put_hex(row, tile):
+    type = board[row][tile][3]
+    board[row][tile].append(type)
+    coords = (board[row][tile][0], board[row][tile][1])
     window.blit(pygame.image.load("pieces/tiles/%s.png" % type), coords)
-    if type != "desert":
-        put_number(coords)
-    else:
-        pass
 
 window.blit(pygame.image.load("pieces/ocean.jpg"), (0,0))
 
 #draw tiles
-for row in board:
-    for position in row:
-        put_hex(position)
+for row in range(len(board)):
+    for tile in range(len(board[row])):
+        put_hex(row, tile)
+
+def put_ports():
+    for port in port_locations:
+       window.blit(pygame.image.load(port['path']), (port['x'], port['y']))
 
 def valid(row, tile):
-    if tile > 0:
-        if row > 0:
-            if [row-1][tile-1] == "6" or [row-1][tile-1] == "8":
-                return false
-            elif [row - 1] [tile] == "6" or [row - 1][tile] == "8":
-                return false
-            else:
-                pass
-        else:
-            pass
-    elif [row][tile -1] == "6" or [row][tile -1] == "8":
-        return false
-    else:
-            pass
-    return true
+    try:
+       return not board[row][tile][2]
+    except IndexError:
+        return False
+
+def spiral(x, y):
+    while valid(x, y):
+        board[x][y][2] = True
+        put_number(x, y)
+        while valid(x + 1, y):
+            x += 1
+            board [x][y][2] = True
+            put_number(x, y)
+        while valid(x, y + 1):
+            y += 1
+            board[x][y][2] = True
+            put_number(x, y)
+        while valid(x - 1, y + 1):
+            x -= 1
+            y += 1
+            board[x][y][2] = True
+            put_number(x, y)
+        while valid(x - 1, y - 1):
+            x -= 1
+            y -= 1
+            board[x][y][2] = True
+            put_number(x, y)
+        while valid(x, y - 1):
+            y -= 1
+            board[x][y][2] = True
+            put_number(x, y)
+        x += 1
+
+
+spiral(0, 0)
+
+put_ports()
 
 newWindow = pygame.Surface(size)
 pygame.transform.scale(window, size, newWindow)
