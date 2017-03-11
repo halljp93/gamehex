@@ -1,6 +1,7 @@
 # gamehex
 Generates a "Settlers of Catan" game board to be used in a tabletop display.
-Ports are in fixed positions of 5th edition border pieces
+Ports are in fixed positions of 5th edition border pieces.
+
 Numbers are placed "alphabetically" in an inward counterclockwise spiral as per 5th edition rules. Random number placement is not supported(yet).
 
 ## Dependencies:
