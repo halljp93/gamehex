@@ -26,7 +26,19 @@ V_PAD = 36
 #Tom's line of code
 #jhwe;l[p omwasm ][iuu jwre njy gayus
 
+class Tile():
+    def __init__(self, x, y,):
+        self.coords = (x, y)
+        self.terrain = tiles.pop()
+        self.visited = False
+        self.number = None
+        self.path = "pieces/tiles/%s.png" % self.terrain
 
+    def draw(self):
+        window.blit(pygame.image.load(self.path), self.coords)
+        if self.number is not None:
+            window.blit(pygame.image.load("pieces/numbers/%s.png" % self.number),
+                    self.coords)
 
 tiles = [
         "brick",
@@ -76,114 +88,105 @@ shuffle(tiles)
 
 board = [
             [
-                [HEX_WIDTH - H_PAD, -V_PAD, False, tiles.pop()          ],
-                [HEX_WIDTH * 2 - H_PAD, -V_PAD, False, tiles.pop()      ],
-                [HEX_WIDTH * 3 - H_PAD, -V_PAD, False, tiles.pop()      ]
+                Tile(HEX_WIDTH - H_PAD, -V_PAD),
+                Tile(HEX_WIDTH * 2 - H_PAD, -V_PAD),
+                Tile(HEX_WIDTH * 3 - H_PAD, -V_PAD),
             ],
 
             [
 
-                [HEX_WIDTH / 2 - H_PAD, V_OFFSET - V_PAD, False, tiles.pop()],
-                [HEX_WIDTH * 1.5  - H_PAD, V_OFFSET - V_PAD, False, tiles.pop()],
-                [HEX_WIDTH * 2.5 - H_PAD, V_OFFSET - V_PAD, False, tiles.pop()],
-                [HEX_WIDTH * 3.5 - H_PAD, V_OFFSET - V_PAD, False, tiles.pop()]
+                Tile(HEX_WIDTH / 2 - H_PAD, V_OFFSET - V_PAD),
+                Tile(HEX_WIDTH * 1.5  - H_PAD, V_OFFSET - V_PAD),
+                Tile(HEX_WIDTH * 2.5 - H_PAD, V_OFFSET - V_PAD),
+                Tile(HEX_WIDTH * 3.5 - H_PAD, V_OFFSET - V_PAD),
             ],
 
             [
-                
-                [-H_PAD, V_OFFSET * 2 - V_PAD, False, tiles.pop()       ],
-                [HEX_WIDTH - H_PAD, V_OFFSET * 2 - V_PAD, False, tiles.pop()],
-                [HEX_WIDTH * 2 - H_PAD, V_OFFSET * 2 - V_PAD, False, tiles.pop()],
-                [HEX_WIDTH * 3 - H_PAD, V_OFFSET * 2 - V_PAD, False, tiles.pop()],
-                [HEX_WIDTH * 4 - H_PAD, V_OFFSET * 2 - V_PAD, False, tiles.pop()]
+                Tile(-H_PAD, V_OFFSET * 2 - V_PAD),
+                Tile(HEX_WIDTH - H_PAD, V_OFFSET * 2 - V_PAD),
+                Tile(HEX_WIDTH * 2 - H_PAD, V_OFFSET * 2 - V_PAD),
+                Tile(HEX_WIDTH * 3 - H_PAD, V_OFFSET * 2 - V_PAD),
+                Tile(HEX_WIDTH * 4 - H_PAD, V_OFFSET * 2 - V_PAD),
             ],
 
             [
-                
-                [HEX_WIDTH / 2 - H_PAD, V_OFFSET * 3 - V_PAD, False, tiles.pop()],
-                [HEX_WIDTH * 1.5 - H_PAD, V_OFFSET * 3 - V_PAD, False, tiles.pop()],
-                [HEX_WIDTH * 2.5 - H_PAD, V_OFFSET * 3 - V_PAD, False, tiles.pop()],
-                [HEX_WIDTH * 3.5 - H_PAD, V_OFFSET * 3 - V_PAD, False, tiles.pop()]
+                Tile(HEX_WIDTH / 2 - H_PAD, V_OFFSET * 3 - V_PAD),
+                Tile(HEX_WIDTH * 1.5 - H_PAD, V_OFFSET * 3 - V_PAD),
+                Tile(HEX_WIDTH * 2.5 - H_PAD, V_OFFSET * 3 - V_PAD),
+                Tile(HEX_WIDTH * 3.5 - H_PAD, V_OFFSET * 3 - V_PAD),
             ],
 
             [
-                
-                [HEX_WIDTH - H_PAD, V_OFFSET * 4 - V_PAD, False, tiles.pop()],
-                [HEX_WIDTH * 2 - H_PAD, V_OFFSET * 4 - V_PAD, False, tiles.pop()],
-                [HEX_WIDTH * 3 - H_PAD, V_OFFSET * 4 - V_PAD, False, tiles.pop()]
+                Tile(HEX_WIDTH - H_PAD, V_OFFSET * 4 - V_PAD),
+                Tile(HEX_WIDTH * 2 - H_PAD, V_OFFSET * 4 - V_PAD),
+                Tile(HEX_WIDTH * 3 - H_PAD, V_OFFSET * 4 - V_PAD),
             ]
         ]
 
 port_locations = [
-        {'path': "pieces/ports/port1.png", 'x': board[0][0][0], 'y': board[0][0][1]},
-        {'path': "pieces/ports/port2.png", 'x': board[0][1][0], 'y': board[0][1][1]},
-        {'path': "pieces/ports/port3.png", 'x': board[1][0][0], 'y': board[1][0][1]},
-        {'path': "pieces/ports/port4.png", 'x': board[1][3][0], 'y': board[1][3][1]},
-        {'path': "pieces/ports/port5.png", 'x': board[2][4][0], 'y': board[2][4][1]},
-        {'path': "pieces/ports/port6.png", 'x': board[3][0][0], 'y': board[3][0][1]},
-        {'path': "pieces/ports/port7.png", 'x': board[3][3][0], 'y': board[3][3][1]},
-        {'path': "pieces/ports/port8.png", 'x': board[4][0][0], 'y': board[4][0][1]},
-        {'path': "pieces/ports/port9.png", 'x': board[4][1][0], 'y': board[4][1][1]}
+        {'path': "pieces/ports/port1.png", 'coords': board[0][0].coords},
+        {'path': "pieces/ports/port2.png", 'coords': board[0][1].coords},
+        {'path': "pieces/ports/port3.png", 'coords': board[1][0].coords},
+        {'path': "pieces/ports/port4.png", 'coords': board[1][3].coords},
+        {'path': "pieces/ports/port5.png", 'coords': board[2][4].coords},
+        {'path': "pieces/ports/port6.png", 'coords': board[3][0].coords},
+        {'path': "pieces/ports/port7.png", 'coords': board[3][3].coords},
+        {'path': "pieces/ports/port8.png", 'coords': board[4][0].coords},
+        {'path': "pieces/ports/port9.png", 'coords': board[4][1].coords},
         ]
 
 def put_number(row, tile):
-    coords = (board[row][tile][0], board[row][tile][1])
-    if board[row][tile][3] != "desert":
-       window.blit(pygame.image.load("pieces/numbers/%s.png" % numbers.pop()), coords) 
+    if board[row][tile].terrain != "desert":
+        board[row][tile].number = numbers.pop()
 
-def put_hex(row, tile):
-    type = board[row][tile][3]
-    board[row][tile].append(type)
-    coords = (board[row][tile][0], board[row][tile][1])
-    window.blit(pygame.image.load("pieces/tiles/%s.png" % type), coords)
+
+def put_ports():
+    for port in port_locations:
+       window.blit(pygame.image.load(port['path']), port['coords'])
+
+def valid(row, tile):
+    try:
+       return not board[row][tile].visited
+    except IndexError:
+        return False
+
+def spiral(x, y):
+    while valid(x, y):
+        board[x][y].visited = True
+        put_number(x, y)
+        while valid(x + 1, y):
+            x += 1
+            board [x][y].visited = True
+            put_number(x, y)
+        while valid(x, y + 1):
+            y += 1
+            board[x][y].visited = True
+            put_number(x, y)
+        while valid(x - 1, y + 1):
+            x -= 1
+            y += 1
+            board[x][y].visited = True
+            put_number(x, y)
+        while valid(x - 1, y - 1):
+            x -= 1
+            y -= 1
+            board[x][y].visited = True
+            put_number(x, y)
+        while valid(x, y - 1):
+            y -= 1
+            board[x][y].visited = True
+            put_number(x, y)
+        x += 1
+
+
+spiral(0, 0)
 
 window.blit(pygame.image.load("pieces/ocean.jpg"), (0,0))
 
 #draw tiles
 for row in range(len(board)):
     for tile in range(len(board[row])):
-        put_hex(row, tile)
-
-def put_ports():
-    for port in port_locations:
-       window.blit(pygame.image.load(port['path']), (port['x'], port['y']))
-
-def valid(row, tile):
-    try:
-       return not board[row][tile][2]
-    except IndexError:
-        return False
-
-def spiral(x, y):
-    while valid(x, y):
-        board[x][y][2] = True
-        put_number(x, y)
-        while valid(x + 1, y):
-            x += 1
-            board [x][y][2] = True
-            put_number(x, y)
-        while valid(x, y + 1):
-            y += 1
-            board[x][y][2] = True
-            put_number(x, y)
-        while valid(x - 1, y + 1):
-            x -= 1
-            y += 1
-            board[x][y][2] = True
-            put_number(x, y)
-        while valid(x - 1, y - 1):
-            x -= 1
-            y -= 1
-            board[x][y][2] = True
-            put_number(x, y)
-        while valid(x, y - 1):
-            y -= 1
-            board[x][y][2] = True
-            put_number(x, y)
-        x += 1
-
-
-spiral(0, 0)
+        board[row][tile].draw()
 
 put_ports()
 
