@@ -16,3 +16,5 @@ Numbers are placed "alphabetically" in an inward counterclockwise spiral as per 
 If no arguments are given, the window size defaults to 1500x1388.
 Because height is the smaller dimension on most displays, one argument will adjust to the specified height while preserving the aspect ratio.
 Passing two arguments will stretch the board to the specified dimensions.
+
+press "r" to simulate a dice roll and highlight tiles that produce resources.
