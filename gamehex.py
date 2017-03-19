@@ -1,7 +1,8 @@
 # this started out as clean code
 # I don't know what happened, I'm sorry
 
-from random import shuffle
+from random import shuffle, randint
+from time import sleep
 import sys
 import pygame
 
@@ -178,6 +179,21 @@ def spiral(x, y):
             put_number(x, y)
         x += 1
 
+def dice_roll():
+    global window, highlight
+    temp_board = window.copy()
+    screen.blit(temp_board, (0, 0))
+    rolled = randint(1, 6) + randint(1, 6)
+
+    for row in range(len(board)):
+        for tile in range(len(board[row])):
+            if board[row][tile].number == str(rolled):
+                temp_board.blit(highlight, board[row][tile].coords)
+    temp_board= pygame.transform.scale(temp_board, size)
+    screen.blit(temp_board, (0, 0))
+    screen.blit(pygame.image.load("pieces/numbers/%s.png" % rolled), (-100, -100))
+    pygame.display.flip()
+
 
 spiral(0, 0)
 
@@ -197,7 +213,13 @@ screen.blit(newWindow, (0, 0))
 
 pygame.display.flip()
 
+highlight = pygame.image.load("pieces/tiles/highlight.png")
+
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
+        elif pygame.key.get_pressed()[pygame.K_r]:
+            dice_roll()
+        else:
+            pass
