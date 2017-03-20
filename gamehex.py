@@ -1,5 +1,4 @@
-# this started out as clean code
-# I don't know what happened, I'm sorry
+
 
 from random import shuffle, randint
 from time import sleep
