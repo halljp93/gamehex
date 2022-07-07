@@ -1,4 +1,6 @@
 # gamehex
+Migrated from my old github, which I lost access to: https://github.com/jphall93/gamehex
+
 Generates a "Settlers of Catan" game board to be used in a tabletop display.
 Ports are in fixed positions of 5th edition border pieces.
 
